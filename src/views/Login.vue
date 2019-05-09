@@ -1,34 +1,66 @@
 <template lang="html">
-
-  <section class="src-views-login">
-    <h1>src-views-login Component</h1>
-  </section>
-
+  <div id="main">
+    <b-row align-v="center">
+      <b-col md="3" offset-md="2">
+        <b-img :src="require('../assets/logo.png')" ></b-img>
+      </b-col>
+      <b-col md="4" offset-md="2">
+        <LoginForm :form="form" :onSubmit="onSubmit" :onReset="onReset" :show="show" />
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script lang="js">
+
+import LoginForm from '@/components/LoginForm.vue'
+
   export default  {
-    name: 'src-views-login',
+    name: 'main',
+    components: {LoginForm},
     props: [],
     mounted() {
 
     },
     data() {
       return {
-
+        form: {
+          email: 'eve.holt@reqres.in',
+          password: 'cityslicka'
+        },
+        show: true
       }
     },
-    methods: {
-
-    },
-    computed: {
-
+     methods: {
+      onSubmit(evt) {
+        evt.preventDefault()
+        // alert(JSON.stringify(this.form))
+        const {email, password} = this.form
+        
+        this.$store.dispatch('efetuarLogin', {email, password}).then( () => {
+          console.log('login finalizado...');
+        })
+        
+      },
+      logout: function () {
+        this.$store.dispatch('efetuarLogout')
+        .then(() => {
+          console.log('Saindo...');
+        })
+      },
+      onReset(evt) {
+        evt.preventDefault()
+        // Reset our form values
+        this.form.email = ''
+        this.form.senha = ''
+        this.show = false
+        this.$nextTick(() => {
+          this.show = true
+        })
+      }
     }
 }
 </script>
 
 <style scoped lang="scss">
-  .src-views-login {
-
-  }
 </style>

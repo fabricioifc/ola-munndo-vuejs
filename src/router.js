@@ -1,12 +1,13 @@
 import Vue from "vue";
 import Router from "vue-router";
+import store from './store.js'
 import Home from "./views/Home.vue";
 import About from './views/About.vue';
 import Login from './views/Login.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -18,7 +19,10 @@ export default new Router({
     {
       path: "/about",
       name: "about",
-      component: About
+      component: About,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: "/login",
@@ -27,3 +31,17 @@ export default new Router({
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn) {
+      next()
+      return
+    }
+    next('/login') 
+  } else {
+    next() 
+  }
+})
+
+export default router;
