@@ -42,7 +42,7 @@ export default new Vuex.Store({
         context.commit('setUsers', response.data.data)
       })
     },
-    login({commit}, user){
+    login({commit}, payload){
       return new Promise((resolve, reject) => {
           commit('auth_request')
           Vue.axios.post(`${base_url}/api/login`, payload)
@@ -50,8 +50,8 @@ export default new Vuex.Store({
               const token = resp.data.token
               // const user = resp.data.user
               localStorage.setItem('token', token)
-              axios.defaults.headers.common['Authorization'] = token
-              commit('auth_success', token, user)
+              Vue.axios.defaults.headers.common['Authorization'] = token
+              commit('auth_success', token, payload)
               resolve(resp)
           })
           .catch(err => {

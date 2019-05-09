@@ -2,8 +2,9 @@
   <div id="app">
     <b-container fluid>
       <div id="nav">
-        <Navigation></Navigation>
+        <Navigation />
       </div>
+      <FlashMessage position="right top"></FlashMessage>
       <router-view />
     </b-container>
   </div>

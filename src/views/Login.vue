@@ -1,5 +1,5 @@
 <template lang="html">
-  <div id="main">
+  <div class="main">
     <b-row align-v="center">
       <b-col md="3" offset-md="2">
         <b-img :src="require('../assets/logo.png')" ></b-img>
@@ -16,7 +16,7 @@
 import LoginForm from '@/components/LoginForm.vue'
 
   export default  {
-    name: 'main',
+    name: 'login',
     components: {LoginForm},
     props: [],
     mounted() {
@@ -36,17 +36,16 @@ import LoginForm from '@/components/LoginForm.vue'
         evt.preventDefault()
         // alert(JSON.stringify(this.form))
         const {email, password} = this.form
-        
-        this.$store.dispatch('efetuarLogin', {email, password}).then( () => {
-          console.log('login finalizado...');
+        this.$store.dispatch('login', {email, password}).then( () => {
+          this.$router.push('/')
+          this.flashMessage.success({
+            message: 'Logado com Sucesso...'
+          })
         })
         
       },
       logout: function () {
-        this.$store.dispatch('efetuarLogout')
-        .then(() => {
-          console.log('Saindo...');
-        })
+        this.$store.dispatch('logout').then(() => {})
       },
       onReset(evt) {
         evt.preventDefault()

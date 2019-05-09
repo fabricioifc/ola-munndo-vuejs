@@ -9,6 +9,9 @@
             <router-link to="/about">About</router-link>
           </b-nav-item>
           <b-nav-item>
+            <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
+          </b-nav-item>
+          <b-nav-item>
             <span v-if="isLoggedIn"> <a @click="logout">Sair</a></span>
           </b-nav-item>
       </b-navbar-nav>

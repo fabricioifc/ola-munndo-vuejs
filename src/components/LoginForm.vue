@@ -33,5 +33,5 @@
 export default {
     name: 'LoginForm',
     props: ['form', 'show', 'onSubmit', 'onReset']
-}
+};
 </script>
